@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How It Works — Trading the Levels | Charting Decoded</title>
+<meta name="description" content="How Floor Pivots and Fib Trend Confirmation work together to read a chart — no signals, no alerts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101B2D; --ink-deep:#0A1220; --cream:#F3EFE8; --cream-warm:#EAE4DA;
+    --gold:#B0812A; --gold-lift:#C99A3D; --blue:#3F6088; --forest:#16341F;
+    --rule:rgba(16,27,45,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--ink);font-family:'Barlow',system-ui,sans-serif;font-weight:400;line-height:1.68;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 32px}
+  @media(max-width:600px){.wrap{padding:0 20px}}
+
+  .eyebrow{font-family:'Barlow',sans-serif;font-weight:600;font-size:11px;letter-spacing:.34em;text-transform:uppercase}
+  .back{display:inline-block;font-family:'Barlow',sans-serif;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none}
+  .back:hover{color:var(--gold-lift)}
+
+  /* ---------- hero ---------- */
+  .hero{background:linear-gradient(165deg,var(--ink) 0%,var(--ink-deep) 100%);color:var(--cream);padding:88px 0 76px}
+  .hero .eyebrow{color:rgba(243,239,232,.55);margin-bottom:22px}
+  .hero h1{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(38px,6vw,60px);line-height:.98;letter-spacing:-.01em;max-width:680px}
+  .hero p{font-size:18px;color:rgba(243,239,232,.8);max-width:520px;margin-top:26px;font-weight:300}
+  .hero p strong{color:var(--cream);font-weight:500}
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:0}
+  .kicker-rule{width:56px;height:2px;border:0;margin-bottom:22px}
+  h2{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:clamp(24px,3.2vw,32px);letter-spacing:-.005em;margin-bottom:20px}
+  p{font-size:16.5px;color:#3A4454;max-width:640px;margin-bottom:16px}
+  p:last-child{margin-bottom:0}
+  ul{padding-left:20px;margin:16px 0;max-width:620px}
+  li{font-size:16.5px;color:#3A4454;margin-bottom:10px}
+
+  .step-grid{display:grid;grid-template-columns:44px 1fr;gap:0 22px;max-width:660px}
+  .step-num{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;color:var(--gold);padding-top:2px}
+  .step-body{padding-bottom:28px;border-left:1px solid var(--rule);margin-left:22px;padding-left:22px}
+  .step-grid > .step-num:last-of-type ~ .step-body,
+  .step-body:last-child{border-left:none}
+
+  .flow{display:flex;flex-direction:column;gap:0}
+  .flow-row{display:grid;grid-template-columns:28px 1fr;gap:18px;align-items:start;padding-bottom:26px}
+  .flow-row:last-child{padding-bottom:0}
+  .flow-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);margin-top:6px}
+  .flow-line{width:1px;background:var(--rule);height:100%;margin-left:4.5px}
+  .flow-title{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px}
+
+  /* ---------- not-signals callout ---------- */
+  .callout{background:var(--cream-warm);border-left:3px solid var(--gold);padding:26px 30px;max-width:660px}
+  .callout p{color:var(--ink);font-size:16px}
+
+  /* ---------- CTA ---------- */
+  .cta-section{background:linear-gradient(165deg,var(--ink) 0%,var(--ink-deep) 100%);color:var(--cream);padding:80px 0;border-bottom:0}
+  .cta-section h2{color:var(--cream)}
+  .cta-section p{color:rgba(243,239,232,.78);max-width:520px}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-family:'Barlow',sans-serif;font-weight:600;font-size:12px;
+    letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:15px 26px;
+    background:var(--gold);color:#fff;margin-top:28px;transition:background .18s ease,transform .18s ease;
+  }
+  .btn:hover{background:var(--gold-lift);transform:translateY(-1px)}
+  .price-note{font-size:13px;color:rgba(243,239,232,.55);margin-top:14px}
+
+  footer{padding:32px 0 56px}
+  footer p{font-size:13px;color:#6B7280}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <a class="back" href="/" style="color:rgba(243,239,232,.7)">&larr; Charting Decoded</a>
+    <div class="eyebrow" style="margin-top:26px">How it works</div>
+    <h1>Two indicators. One question each.</h1>
+    <p>
+      <strong>Floor Pivots</strong> marks the levels price actually reacts to. <strong>Fib Trend Confirmation</strong>
+      tells you whether the current trend makes a level worth trusting. Here's exactly how they're meant to be
+      read together — not a sales pitch, the actual method.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <hr class="kicker-rule" style="background:#8C4A46">
+    <h2>Floor Pivots — the session's map</h2>
+    <p>
+      Floor Pivots calculates a pivot point (P) from the prior session's high, low, and close, then projects
+      two levels of resistance (R1, R2) above it and two levels of support (S1, S2) below it. These are the
+      same reference levels floor traders used long before charting software existed — they're popular for a
+      reason: enough people watch them that price tends to react there, at least initially.
+    </p>
+    <p>The indicator draws all five lines automatically at the start of each session, and re-plots them fresh the next day. Nothing to calculate by hand.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <hr class="kicker-rule" style="background:var(--blue)">
+    <h2>Fib Trend Confirmation — is this level worth trusting?</h2>
+    <p>
+      A pivot level on its own doesn't tell you whether price is likely to respect it or blow through it. Fib
+      Trend Confirmation answers that by tracking the current trend's Fibonacci retracement — commonly the
+      .618 line — and checking whether price is holding above or below it relative to the pivot in question.
+    </p>
+    <p>
+      When a pivot level and the Fib trend line line up — price rejecting at the pivot while still on the
+      "correct" side of the .618 — that's the setup the manual calls a genuine confluence. When they disagree,
+      that's the indicator's way of saying: this level is weaker than it looks, be careful.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <hr class="kicker-rule" style="background:var(--gold)">
+    <h2>Reading them together</h2>
+    <div class="flow">
+      <div class="flow-row">
+        <div class="flow-dot"></div>
+        <div>
+          <div class="flow-title">1. Mark the session</div>
+          <p style="margin-bottom:0">Floor Pivots plots P, R1, R2, S1, S2 at session open.</p>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-dot"></div>
+        <div>
+          <div class="flow-title">2. Check the trend line</div>
+          <p style="margin-bottom:0">Fib Trend Confirmation shows whether price is above or below the current .618 retracement.</p>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-dot"></div>
+        <div>
+          <div class="flow-title">3. Look for agreement</div>
+          <p style="margin-bottom:0">A pivot level and the trend line pointing the same way is the confluence worth paying attention to. Disagreement is the indicator telling you to expect a fake-out.</p>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-dot"></div>
+        <div>
+          <div class="flow-title">4. Read the chart yourself</div>
+          <p style="margin-bottom:0">Neither indicator tells you to buy or sell. You still decide, with a clearer picture of which levels actually matter right now.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="callout">
+      <p><strong>No signals, no alerts, no auto-trading.</strong> These are chart-reading tools, not a bot. If you want something that tells you when to click buy, this isn't it — the manual spends as much time on when <em>not</em> to trade a level as it does on when to.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="wrap">
+    <h2>Trading the Levels — Indicator Pack</h2>
+    <p>Floor Pivots and Fib Trend Confirmation, plus the full manual covering install steps and how to use them together.</p>
+    <a href="https://ko-fi.com/s/42979d5271" class="btn" target="_blank" rel="noopener">
+      Get the indicators — $44
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6.5 2.5 10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <p class="price-note">$44 one-time — instant download, no subscription.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="yr">2026</span> Nathan Calderay · chartingdecoded.com</p>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
