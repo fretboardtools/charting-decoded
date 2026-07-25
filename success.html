@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanks — Charting Decoded</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101B2D; --ink-deep:#0A1220; --cream:#F3EFE8; --cream-warm:#EAE4DA;
+    --gold:#B0812A; --gold-lift:#C99A3D; --rule:rgba(16,27,45,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:linear-gradient(165deg,var(--ink) 0%,var(--ink-deep) 100%);
+    color:var(--cream);font-family:'Barlow',system-ui,sans-serif;font-weight:400;
+    line-height:1.7;-webkit-font-smoothing:antialiased;
+    min-height:100vh;display:flex;align-items:center;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:48px 32px}
+  @media(max-width:600px){.wrap{padding:32px 20px}}
+  .mark{width:44px;height:44px;margin-bottom:28px}
+  .eyebrow{font-family:'Barlow',sans-serif;font-weight:600;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-lift);margin-bottom:18px}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(30px,5vw,42px);line-height:1.05;letter-spacing:-.005em}
+  p{font-size:16.5px;color:rgba(243,239,232,.82);margin-top:20px;max-width:460px}
+  p.small{font-size:14px;color:rgba(243,239,232,.55);margin-top:28px}
+  a{color:var(--gold-lift)}
+  .back{
+    display:inline-flex;align-items:center;gap:8px;margin-top:36px;
+    font-family:'Barlow',sans-serif;font-weight:600;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;text-decoration:none;color:var(--cream);
+    border:1px solid rgba(243,239,232,.32);padding:13px 22px;
+  }
+  .back:hover{border-color:var(--cream);background:rgba(243,239,232,.07)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+    <circle cx="20" cy="20" r="13" stroke="#C99A3D" stroke-width="1"/>
+    <path d="M20 3 L22.4 17.6 L37 20 L22.4 22.4 L20 37 L17.6 22.4 L3 20 L17.6 17.6 Z" fill="#C99A3D" opacity=".9"/>
+    <circle cx="20" cy="20" r="2.4" fill="#101B2D"/>
+  </svg>
+  <div class="eyebrow">Order confirmed</div>
+  <h1>Thanks for picking up<br>Trading the Levels.</h1>
+  <p>
+    Check your inbox — your download link for the indicators and the manual is on its way from our payment
+    processor. It usually arrives within a few minutes; if it's not there shortly, check spam before reaching out.
+  </p>
+  <p>
+    Questions, or the link didn't show up? Email <a href="mailto:hello@chartingdecoded.com">hello@chartingdecoded.com</a>.
+  </p>
+  <a class="back" href="/">&larr; Back to chartingdecoded.com</a>
+  <p class="small">Trading involves risk of loss. Nothing here is financial advice.</p>
+</div>
+</body>
+</html>
